@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Courses</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'courses/styles.css' %}">
+  </head>
+  <body>
+
+    <div id="container">
+      <h1>Add a new course</h1>
+      <div class="input_content">
+        {% if messages %}
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+        <form class="" action="/courses/add" method="post">
+          {% csrf_token %}
+          <p><label for="name">Name: </label> <input class="name" type="text" name="name"></p>
+          <p><label for="desc">Description: </label>
+            <textarea name="desc" rows="8" cols="30"></textarea></p>
+          <p><input type="submit" name="add" value="Add"></p>
+        </form>
+      </div>
+      <div class="show_content">
+        <table class="course_table">
+          <thead>
+            <th>Course Name</th>
+            <th>Description</th>
+            <th>Date Added</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+            {% for course in courses %}
+            <tr>
+              <td>{{ course.name }}</td>
+              <td>{{ course.desc }}</td>
+              <td>{{ course.created_at }}</td>
+              <td><a href="/destroy/{{ course.id }}">remove</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </body>
+</html>
